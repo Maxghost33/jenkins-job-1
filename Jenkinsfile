@@ -2,9 +2,6 @@ node('docker') {
  
     stage 'Checkout'
         checkout scm
-    
-    stage 'Build Source Nginx (just for example - here can be (dotnet build and other))'
-        sh "docker build nginx-source/ --build-arg NGINX_VERSION=1.17.7 --build-arg NJS_VERSION=0.3.8 -t ghostgoose33/nginx-source.dev"
 
     stage 'Docker Build Prod Image'
         imageTag = (sh (script: "git rev-parse --short HEAD", returnStdout: true))
@@ -14,7 +11,7 @@ node('docker') {
     stage 'Docker Run'
         sh "docker run -d -p 80:80 --network jenkins-net --name ${dockerName} ghostgoose33/nginx-custom.${imageTag}"
     
-    stage 'Check NGINX'
+    stage 'Push NGINX'
         sh "docker push ghostgoose33/nginx-custom.${imageTag}"
 }
 
