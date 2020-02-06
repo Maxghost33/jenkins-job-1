@@ -5,7 +5,7 @@ node('docker') {
  
     stage 'Checkout'
         checkout scm
-    docker.withRegistry("https://registry.hub.docker.com", "cred-docker-registry"){
+    docker.withRegistry("docker.io", "cred-docker-registry"){
         
         stage 'Docker nginx image'
             sh "docker build nginx-source/ -t ghostgoose33/nginx-source.dev"
