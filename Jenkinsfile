@@ -19,6 +19,6 @@ node('docker') {
 }
 
 node ('docker'){
-    stage 'Check NGINX'
-        sh "docker push ghostgoose33/nginx-custom.${imageTag}:v2
+    stage 'Docker push version 2'
+        sh "docker push ghostgoose33/nginx-custom.${imageTag}:v2"
 }
