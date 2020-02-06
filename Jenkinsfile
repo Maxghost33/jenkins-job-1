@@ -4,7 +4,7 @@ node('docker') {
         checkout scm
     
     stage 'Build Source Nginx (just for example - here can be (dotnet build and other))'
-        sh "docker build nginx-source/ --build-arg NGINX_VERSION=1.17.7 --build-arg NJS_VERSION=0.3.6 -t ghostgoose33/nginx-source.dev"
+        sh "docker build nginx-source/ --build-arg NGINX_VERSION=1.17.7 --build-arg NJS_VERSION=0.3.8 -t ghostgoose33/nginx-source.dev"
 
     stage 'Docker Build Prod Image'
         imageTag = (sh (script: "git rev-parse --short HEAD", returnStdout: true))
