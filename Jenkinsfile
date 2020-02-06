@@ -33,10 +33,3 @@ node('docker') {
             sh "docker push ghostgoose33/nginx-custom.${imageTag}"
     }
 }
-
-node ('docker'){
-    docker.withRegistry("", "cred-docker-registry"){
-        stage 'Docker push version 2'
-            sh "docker push ghostgoose33/nginx-custom.${imageTag}:v2"
-    }
-}
