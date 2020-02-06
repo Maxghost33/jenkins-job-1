@@ -6,7 +6,10 @@ node('docker') {
     stage 'Checkout'
         checkout scm
     docker.withRegistry("https://registry.hub.docker.com", "cred-docker-registry"){
-    
+        
+        stage 'Docker nginx image'
+            sh "docker build nginx-source/ -t ghostgoose33/nginx-source.dev"
+        
         stage 'Docker Build Prod Image'
             imageTag = (sh (script: "git rev-parse --short HEAD", returnStdout: true))
             dockerName = "nginx-srv"
