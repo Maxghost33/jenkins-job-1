@@ -4,7 +4,7 @@ LABEL maintainer="NGINX Docker Maintainers <docker-maint@nginx.com>"
 
 ENV NGINX_VERSION   $NGINX_VERSION
 ENV NJS_VERSION     $NJS_VERSION
-ENV PKG_RELEASE     1~buste
+ENV PKG_RELEASE     1~buster
 
 RUN set -x \
 # create nginx user/group first, to be consistent throughout docker variants
