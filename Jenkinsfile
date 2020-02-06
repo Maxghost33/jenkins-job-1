@@ -5,7 +5,7 @@ node('docker') {
  
     stage 'Checkout'
         checkout scm
-    docker.withRegistry("https://hub.docker.com", "cred-docker-registry"){
+    docker.withRegistry([ credentialsId: "cred-docker-registry", url: "" ]){
         
         stage 'Docker nginx image'
             sh "docker build nginx-source/ -t ghostgoose33/nginx-source.dev"
@@ -35,7 +35,7 @@ node('docker') {
 }
 
 node ('docker'){
-    docker.withRegistry("https://hub.docker.como", "cred-docker-registry"){
+    docker.withRegistry([ credentialsId: "cred-docker-registry", url: "" ]){
         stage 'Docker push version 2'
             sh "docker push ghostgoose33/nginx-custom.${imageTag}:v2"
     }
