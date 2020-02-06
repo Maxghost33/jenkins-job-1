@@ -1,18 +1,23 @@
+
+
+
 node('docker') {
  
     stage 'Checkout'
         checkout scm
-
-    stage 'Docker Build Prod Image'
-        imageTag = (sh (script: "git rev-parse --short HEAD", returnStdout: true))
-        dockerName = "nginx-srv"
-        sh "docker build . -t ghostgoose33/nginx-custom.${imageTag}"
+    docker.withRegistry("https://registry.hub.docker.com", "cred-docker-registry"){
     
-    stage 'Docker Run'
-        sh "docker run -d -p 80:80 --network jenkins-net --name ${dockerName} ghostgoose33/nginx-custom.${imageTag}"
+        stage 'Docker Build Prod Image'
+            imageTag = (sh (script: "git rev-parse --short HEAD", returnStdout: true))
+            dockerName = "nginx-srv"
+            sh "docker build . -t ghostgoose33/nginx-custom.${imageTag}"
     
-    stage 'Push NGINX'
-        sh "docker push ghostgoose33/nginx-custom.${imageTag}"
+        stage 'Docker Run'
+            sh "docker run -d -p 80:80 --network jenkins-net --name ${dockerName} ghostgoose33/nginx-custom.${imageTag}"
+    
+        stage 'Push NGINX'
+            sh "docker push ghostgoose33/nginx-custom.${imageTag}"
+    }
 }
 
 node ('docker'){
