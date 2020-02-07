@@ -1,4 +1,11 @@
-
+properties([
+    parameters([
+	stringParam(
+            defaultValue: '', 
+            description: 'TAG', 
+            name: 'tag')
+    ])
+])
 
 
 node('docker') {
@@ -35,6 +42,11 @@ node('docker') {
         stage 'Push NGINX'
             if (env.BRANCH_NAME == 'master') {
                 sh "docker push ghostgoose33/nginx-custom.${imageTag}"
+            }
+        
+        stage 'Deploy chronograf'
+            if (env.BRANCH_NAME == 'master') {
+                build(job: 'GitHub/jenkins-job-2/master', parameters: [[$class: 'StringParameterValue', name:"imageTag", value: "${imageTag}"]], wait: true)
             }
     }
 }
