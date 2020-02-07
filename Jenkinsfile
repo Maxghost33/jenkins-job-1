@@ -45,6 +45,8 @@ node('docker') {
             }
         
         stage 'Deploy chronograf'
-            build(job: 'GitHub/jenkins-job-2/master', parameters: [[$class: 'StringParameterValue', name:"imageTag", value: "${imageTag}"]], wait: true)
+            if (env.BRANCH_NAME == 'master') {
+                build(job: 'GitHub/jenkins-job-2/master', parameters: [[$class: 'StringParameterValue', name:"imageTag", value: "${imageTag}"]], wait: true)
+            }
     }
 }
