@@ -16,6 +16,9 @@ node('docker') {
             sh "docker build . -t ghostgoose33/nginx-custom.${imageTag}"
     
         stage 'Docker Run'
+            when {
+                branch "master"
+            }
             try{
                 tagold = (sh (script: "docker ps | awk '{ print \$2 }' | grep nginx-custom", returnStdout:true))
             } catch(err){
@@ -30,6 +33,9 @@ node('docker') {
             sh "docker run -d -p 80:80 --network jenkins-net --name ${dockerName} ghostgoose33/nginx-custom.${imageTag}"
     
         stage 'Push NGINX'
+            when {
+                branch "master"
+            }
             sh "docker push ghostgoose33/nginx-custom.${imageTag}"
     }
 }
