@@ -14,7 +14,7 @@ node('docker') {
         checkout([$class: 'GitSCM', 
             branches: [[name: '*/${params.branch}']], 
             doGenerateSubmoduleConfigurations: false, 
-            extensions: [[$class: ‘LocalBranch’, localBranch: “**”]], 
+            extensions: scm.extensions + [[$class: 'LocalBranch'], [$class: 'WipeWorkspace']], 
             submoduleCfg: [], 
             userRemoteConfigs: [[]]
         ])
