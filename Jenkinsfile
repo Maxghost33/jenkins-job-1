@@ -15,8 +15,7 @@ node('docker') {
             branches: [[name: '*/${params.branch}']], 
             doGenerateSubmoduleConfigurations: false, 
             extensions: scm.extensions + [[$class: 'LocalBranch'], [$class: 'WipeWorkspace']], 
-            submoduleCfg: [], 
-            userRemoteConfigs: [[]]
+            submoduleCfg: []
         ])
     
     docker.withRegistry("", "cred-docker-registry"){
