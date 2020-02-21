@@ -11,7 +11,13 @@ properties([
 node('docker') {
  
     stage 'Checkout'
-        checkout scm
+        checkout([$class: 'GitSCM', 
+            branches: [[name: '*/dev']], 
+            doGenerateSubmoduleConfigurations: false, 
+            extensions: [], 
+            submoduleCfg: [], 
+            userRemoteConfigs: [[]]
+        ])
     
     docker.withRegistry("", "cred-docker-registry"){
 
