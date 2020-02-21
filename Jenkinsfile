@@ -12,7 +12,7 @@ node('docker') {
  
     stage 'Checkout'
         checkout([$class: 'GitSCM', 
-            branches: [[name: '*/dev']], 
+            branches: [[name: '{params.branch}']], 
             doGenerateSubmoduleConfigurations: false, 
             extensions: [], 
             submoduleCfg: [], 
